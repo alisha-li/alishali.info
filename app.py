@@ -31,10 +31,16 @@ def get_reviews_by_day():
     response = requests.post(url, json=payload)
 
     # Handle errors
-    if response.json()["error"] != None:
-        raise Exception(f"AnkiConnect error: {response.json().get('error')}")
-
-    return response.json()["result"]
+    try:
+        response = requests.post(url, json=payload, timeout=1)  # Set 1-second timeout
+        response.raise_for_status()  # Raise error if response is bad
+        data = response.json()
+        if data["error"]:
+            raise Exception(f"AnkiConnect error: {data['error']}")
+        return data["result"]
+    except Exception as e:
+        print("AnkiConnect query failed:", e)
+        return []
 
 def get_reviews_by_day_cached():
     """
