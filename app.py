@@ -124,7 +124,7 @@ def heatmap():
     html = pio.to_html(fig, full_html=False)
     html_with_header = f"""
     <div style="position: absolute; top: 10px; left: 10px;">
-        <a href="/" style="text-decoration: none; font-size: 16px;"> Home > Anki</a>
+        <a href="/" style="text-decoration: none; font-size: 16px;"> Home </a>> Anki
     </div>
     <div style="margin-top: 50px; text-align: center; font-size: 20px; font-family: Arial;">
         <a href="https://apps.ankiweb.net/" target="_blank">Anki</a> is a spaced repetition flashcard software. Below is a heatmap of my reviews.
