@@ -134,6 +134,9 @@ def heatmap():
     """
     return render_template_string(html_with_header)
 
+@app.route("/plots/boston-food")
+def boston_food_plot():
+    return render_template("plots/boston-food.html")
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))  # Defaults to 5000 if PORT isn't set
