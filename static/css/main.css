@@ -5,4 +5,20 @@ body {
     width: 50%;
     line-height: 1.6;
     margin-left: 2%;
+    background-color: #f0ece4;
+}
+
+.socials {
+    margin-top: 2em;
+    letter-spacing: 0.05em;
+}
+
+.socials a {
+    color: inherit;
+}
+
+.socials .separator {
+    margin: 0 0.4em;
+    font-size: 1.3em;
+    vertical-align: middle;
 }
