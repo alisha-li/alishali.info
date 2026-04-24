@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template_string, render_template
+from flask import Flask, jsonify, render_template_string, render_template, Response
 import requests
 import pandas as pd
 from plotly_calplot import calplot
@@ -144,7 +144,11 @@ def sunburst_dialogue_distribution():
 
 @app.route("/violation_rate_chart")
 def violation_rate_chart():
-    return render_template("plots/violation_rate_chart copy.html")
+    # This Plotly export contains `{{ ... }}` sequences that Jinja may try to interpret.
+    # Serve it as raw HTML instead of rendering as a Jinja template.
+    path = os.path.join(app.root_path, "templates", "plots", "violation_rate_chart copy.html")
+    with open(path, "r", encoding="utf-8") as f:
+        return Response(f.read(), mimetype="text/html")
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))  # Defaults to 5000 if PORT isn't set
