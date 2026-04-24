@@ -138,6 +138,14 @@ def heatmap():
 def boston_food_plot():
     return render_template("plots/boston-food.html")
 
+@app.route("/sunburst_dialogue_distribution")
+def sunburst_dialogue_distribution():
+    return render_template("plots/sunburst_dialogue_distribution.html")
+
+@app.route("/violation_rate_chart")
+def violation_rate_chart():
+    return render_template("plots/violation_rate_chart copy.html")
+
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))  # Defaults to 5000 if PORT isn't set
     app.run(host="0.0.0.0", port=port)
