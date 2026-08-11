@@ -1,0 +1,82 @@
+:root {
+    --bg: #f0ece4;
+    --fg: #1a1a1a;
+    --muted: #6b665c;
+    --rule: #d8d2c6;
+}
+
+html {
+    background-color: var(--bg);
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    text-align: left;
+    line-height: 1.6;
+    color: var(--fg);
+    background-color: var(--bg);
+    margin: 0 2%;
+    max-width: 50%;
+}
+
+a {
+    color: inherit;
+}
+
+.socials {
+    margin-top: 2em;
+    letter-spacing: 0.05em;
+}
+
+.socials .separator {
+    margin: 0 0.4em;
+    font-size: 1.3em;
+    vertical-align: middle;
+}
+
+/* Interior pages: breadcrumb + wider column for charts */
+body.page {
+    max-width: 900px;
+    padding-bottom: 4em;
+}
+
+.crumb {
+    font-size: 16px;
+    color: var(--muted);
+    padding: 1em 0 0.5em;
+}
+
+.crumb a {
+    color: var(--muted);
+}
+
+.lede {
+    margin: 0 0 1.5em;
+}
+
+/* Full-bleed chart pages (Plotly exports) */
+body.chart {
+    max-width: none;
+    margin: 0;
+}
+
+body.chart .crumb {
+    padding-left: 2%;
+    /* htmlwidget exports make <body> a flex container; without this the
+       breadcrumb gets squeezed to zero height by the chart. */
+    flex: 0 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+body.chart .plotly-graph-div {
+    margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+    body {
+        max-width: none;
+        font-size: 18px;
+    }
+}

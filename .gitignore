@@ -1,3 +1,9 @@
-update.log
-auto_push.sh
+# Deployed content lives in public/ only. Everything below is local-only:
+# large raw chart exports, the retired Flask app, logs, and tooling.
+sources/
+old/
+logs/
+venv/
 __pycache__/
+.vercel
+.DS_Store

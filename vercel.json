@@ -1,14 +1,44 @@
 {
-    "builds" : [
-        { 
-            "src": "app.py", 
-            "use": "@vercel/python" 
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": null,
+  "installCommand": null,
+  "outputDirectory": "public",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/anki-heatmap", "destination": "/anki", "permanent": true },
+    { "source": "/sunburst_dialogue_distribution", "destination": "/plots/dialogue-sunburst", "permanent": true },
+    { "source": "/violation_rate_chart", "destination": "/plots/violation-rate", "permanent": true },
+    { "source": "/api/review-data", "destination": "/anki_data.json", "permanent": false }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=86400, stale-while-revalidate=604800"
         }
-    ],
-    "routes": [
-        { 
-            "src": "/(.*)", 
-            "dest": "/app.py" 
+      ]
+    },
+    {
+      "source": "/css/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=31536000, stale-while-revalidate=604800"
         }
-    ]
+      ]
+    },
+    {
+      "source": "/favicon.png",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=31536000, stale-while-revalidate=604800"
+        }
+      ]
+    }
+  ]
 }
