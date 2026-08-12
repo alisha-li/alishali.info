@@ -7,7 +7,6 @@ version of this page shipped a ~4.6 MB Plotly bundle per request; this one is
 """
 
 import datetime as dt
-import html
 import json
 import pathlib
 
@@ -108,18 +107,17 @@ def year_svg(year, counts, cuts, today):
         lv = level(count, cuts)
         fill = EMPTY if lv < 0 else LEVELS[lv]
         label = f"{iso}: {count} review{'' if count == 1 else 's'}"
+        # <title> alone is not enough: Safari does not render tooltips for it.
+        # data-t drives the JS tooltip; <title> stays for screen readers.
         parts.append(
             f'<rect x="{x}" y="{y}" width="{CELL}" height="{CELL}" rx="2" '
-            f'fill="{fill}"><title>{label}</title></rect>'
+            f'fill="{fill}" data-t="{label}"><title>{label}</title></rect>'
         )
         day += dt.timedelta(days=1)
 
-    total = sum(c for d, c in counts.items() if d[:4] == str(year))
-    active = sum(1 for d, c in counts.items() if d[:4] == str(year) and c > 0)
-
     return (
         f'<div class="year">'
-        f'<h2>{year} <span class="ysum">{total:,} reviews on {active} days</span></h2>'
+        f"<h2>{year}</h2>"
         f'<svg viewBox="0 0 {width} {height}" width="{width}" height="{height}" '
         f'role="img" aria-label="Anki reviews in {year}">{"".join(parts)}</svg>'
         f"</div>"
@@ -143,9 +141,6 @@ def build():
     today = dt.date.today()
     years = sorted({int(d[:4]) for d in counts}, reverse=True)
 
-    total = sum(counts.values())
-    first = min(counts)
-
     body = "\n".join(year_svg(y, counts, cuts, today) for y in years)
 
     page = f"""<!DOCTYPE html>
@@ -158,24 +153,51 @@ def build():
     <style>
       .year {{ margin: 0 0 1.75em; }}
       .year h2 {{ font-size: 20px; font-weight: bold; margin: 0 0 0.35em; }}
-      .ysum {{ font-size: 15px; font-weight: normal; color: var(--muted); margin-left: 0.5em; }}
       .year svg {{ max-width: 100%; height: auto; display: block; }}
-      .year text.mon, .year text.dow {{ font: 10px Arial, sans-serif; fill: var(--muted); }}
+      .year text.mon, .year text.dow {{ font-size: 10px; fill: var(--muted); }}
+      .year rect {{ cursor: default; }}
       .legend {{ font-size: 14px; color: var(--muted); }}
       .sw {{ display: inline-block; width: 11px; height: 11px; border-radius: 2px; margin: 0 2px; vertical-align: -1px; }}
+      #tip {{
+        position: fixed; z-index: 20; display: none; pointer-events: none;
+        background: #1a1a1a; color: #fff; font-size: 13px; line-height: 1.3;
+        padding: 4px 8px; border-radius: 4px; white-space: nowrap;
+      }}
     </style>
     <title>Anki &middot; Alisha Li</title>
   </head>
   <body class="page">
     <p class="crumb"><a href="/">Home</a> &rsaquo; Anki</p>
     <p class="lede">
-      <a href="https://apps.ankiweb.net/">Anki</a> is a spaced repetition flashcard
-      program. Below is every review I have done since {html.escape(first)} &mdash;
-      {total:,} in total. Hover a square for the count.
+      <a href="https://apps.ankiweb.net/" target="_blank">Anki</a> is a spaced
+      repetition flashcard software. Below is a heatmap of my reviews.
     </p>
     {body}
     {legend()}
-    <p class="crumb">Updated {today.isoformat()}.</p>
+    <div id="tip"></div>
+    <script>
+      // Safari ignores SVG <title> tooltips, so draw our own.
+      (function () {{
+        var tip = document.getElementById('tip');
+        document.addEventListener('mouseover', function (e) {{
+          var t = e.target.getAttribute && e.target.getAttribute('data-t');
+          if (!t) return;
+          tip.textContent = t;
+          tip.style.display = 'block';
+        }});
+        document.addEventListener('mousemove', function (e) {{
+          if (tip.style.display !== 'block') return;
+          var w = tip.offsetWidth;
+          tip.style.left = Math.min(e.clientX + 12, window.innerWidth - w - 8) + 'px';
+          tip.style.top = (e.clientY - tip.offsetHeight - 10) + 'px';
+        }});
+        document.addEventListener('mouseout', function (e) {{
+          if (e.target.getAttribute && e.target.getAttribute('data-t')) {{
+            tip.style.display = 'none';
+          }}
+        }});
+      }})();
+    </script>
   </body>
 </html>
 """
