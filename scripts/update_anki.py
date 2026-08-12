@@ -35,9 +35,11 @@ def log(msg):
     print(line, end="")
 
 
-def git(*args, check=True):
+def git(*args):
+    """Never raises. A git failure has to reach the log as a message, not as a
+    traceback in launchd.err that nobody reads."""
     return subprocess.run(
-        [GIT, *args], cwd=ROOT, check=check, capture_output=True, text=True
+        [GIT, *args], cwd=ROOT, capture_output=True, text=True
     )
 
 
@@ -100,21 +102,33 @@ def main():
     page, size = build_anki.build()
     log(f"rebuilt {page.relative_to(ROOT)} ({size / 1024:.0f} KB)")
 
-    dirty = git("status", "--porcelain").stdout.splitlines()
     ours = {"public/anki_data.json", "public/anki/index.html"}
-    unrelated = [l for l in dirty if l[3:].strip().strip('"') not in ours]
+    dirty = git("status", "--porcelain").stdout.splitlines()
+    changed = {l[3:].strip().strip('"') for l in dirty}
+
+    unrelated = changed - ours
     if unrelated:
-        log(f"stopping before commit: unrelated changes present: {unrelated}")
+        log(f"stopping before commit: unrelated changes present: {sorted(unrelated)}")
         return 0
 
-    git("add", "public/anki_data.json", "public/anki/index.html")
-    git("commit", "-m", f"Anki data through {fresh[0][0]}")
-    push = git("push", check=False)
+    if not changed:
+        # Anki reported something new, but it rendered to the same bytes that are
+        # already committed. Nothing to push.
+        log("rebuilt output matches HEAD; nothing to commit")
+        return 0
+
+    git("add", *ours)
+    commit = git("commit", "-m", f"Anki data through {fresh[0][0]}")
+    if commit.returncode != 0:
+        log(f"ERROR: commit failed: {(commit.stderr or commit.stdout).strip()}")
+        return 1
+
+    push = git("push")
     if push.returncode != 0:
         log(f"ERROR: push failed: {push.stderr.strip()}")
         return 1
 
-    log("pushed; Vercel will redeploy")
+    log(f"pushed {commit.stdout.splitlines()[0].strip()}; Vercel will redeploy")
     return 0
 
 
