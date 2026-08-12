@@ -11,7 +11,11 @@ set -e
 REPO="${0:A:h:h}"
 LABEL="com.alishali.anki-sync"
 PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
-PYTHON="$(command -v python3)"
+# Resolve to the real interpreter. `command -v python3` can return a pyenv shim,
+# which is a shell script that needs a login environment launchd does not give it
+# ("pyenv: cannot change working directory to ''").
+PYTHON="$(python3 -c 'import sys; print(sys.executable)')"
+[ -x "$PYTHON" ] || PYTHON=/usr/bin/python3
 
 mkdir -p "$REPO/logs" "$HOME/Library/LaunchAgents"
 
