@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="stylesheet" href="/css/main.css">
+    <meta name="description" content="Alisha Li — Data Science at Wellesley College. Resume.">
+    <style>
+      .resume { font-size: 17px; line-height: 1.45; }
+      .resume h1 {
+        font-size: 34px; font-weight: normal; text-align: center;
+        margin: 0.4em 0 0.15em;
+      }
+      .topbar { display: flex; justify-content: space-between; gap: 1em; }
+      .contact { text-align: center; margin: 0 0 1.6em; }
+      .contact .sep { margin: 0 0.35em; color: var(--muted); }
+
+      .resume h2 {
+        font-size: 15px; font-weight: normal;
+        text-transform: uppercase; letter-spacing: 0.12em;
+        border-bottom: 1px solid var(--fg);
+        padding-bottom: 2px; margin: 1.5em 0 0.6em;
+      }
+
+      .entry { margin: 0 0 0.9em; }
+      .row {
+        display: flex; justify-content: space-between;
+        align-items: baseline; gap: 1.5em;
+      }
+      .row .where { white-space: nowrap; }
+      .role { font-style: italic; }
+      .role .when { white-space: nowrap; }
+      .what { font-weight: bold; }
+
+      .resume ul { margin: 0.15em 0 0; padding-left: 1.3em; }
+      .resume li { margin: 0.1em 0; }
+
+      .skills p { margin: 0.2em 0; }
+
+      @media (max-width: 640px) {
+        .row { display: block; }
+        .row .where, .role .when { display: block; color: var(--muted); }
+      }
+      @media print {
+        .crumb { display: none; }
+        body { max-width: none; margin: 0; background: #fff; }
+      }
+    </style>
+    <title>Resume &middot; Alisha Li</title>
+  </head>
+  <body class="page resume">
+    <p class="crumb topbar">
+      <span><a href="/">Home</a> &rsaquo; Resume</span>
+      <a href="/alisha-li-resume.pdf">Download PDF</a>
+    </p>
+
+    <h1>Alisha Li</h1>
+    <p class="contact">
+      <!-- The whitespace between these is load-bearing: without it the whole
+           line is one unbreakable token and overflows on a phone. -->
+      <a href="mailto:al138@wellesley.edu">al138@wellesley.edu</a>
+      <span class="sep">|</span>
+      <a href="https://alishali.info">alishali.info</a>
+      <span class="sep">|</span>
+      <a href="https://github.com/alisha-li">github</a>
+      <span class="sep">|</span>
+      <a href="https://www.linkedin.com/in/alishali138/">linkedin</a>
+      <span class="sep">|</span>
+      <span style="white-space: nowrap">Boston, MA</span>
+    </p>
+    <h2>Education</h2>
+    <div class="entry">
+      <div class="row"><span class="what">Wellesley College</span> <span class="where">Wellesley, MA</span></div>
+      <div class="row role"><span>B.A. in Data Science, GPA: 3.92/4.0</span> <span class="when">Expected May 2027</span></div>
+      <ul>
+        <li>Relevant Courses: Probability, Probabilistic ML, Causal Inference, Computer Systems, Graph Theory, Linear Algebra, Regression Analysis, Stat Modeling and Inference, Multivariate Stats, Physics E&amp;M</li>
+        <li>Awards: Sophomore Data Science Prize, Data Science Capstone Prize</li>
+        <li><strong>Massachusetts Institute of Technology Cross-Registration: 6.7900 Machine Learning (Grad Level)</strong></li>
+      </ul>
+    </div>
+
+    <h2>Experience</h2>
+    <div class="entry">
+      <div class="row"><span class="what">Amazon Web Services</span> <span class="where">Seattle, Washington</span></div>
+      <div class="row role"><span>Software Development Engineer Intern</span> <span class="when">May 2026 &ndash; Present</span></div>
+      <ul>
+        <li>Built Python library that generates synthetic data from host/software/advisory distributions to accelerate security testing/deployment; <strong>connected to team&rsquo;s integration tests, which runs against all prod-deployed code.</strong></li>
+        <li>Applied property-based testing principles to generate data whose construction embed expected test assertions</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="row"><span class="what">Amazon Web Services</span> <span class="where">Austin, Texas</span></div>
+      <div class="row role"><span>Software Development Engineer Intern</span> <span class="when">May &ndash; Aug 2025</span></div>
+      <ul>
+        <li>Created a portal to ingest AWS security&rsquo;s global vulnerability datasets <strong>reducing 2+ day manual engineer input-approval process to minutes</strong>, using React, API Gateway, Lambda, and DynamoDB in Java</li>
+        <li>Secured portal to team-only with UI authN/authZ and SIGV4 signed requests to IAM-configured API Gateway</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="row"><span class="what">Harvard-MIT Health Sciences &amp; Technology</span> <span class="where">Cambridge, MA</span></div>
+      <div class="row role"><span>Data Science Researcher</span> <span class="when">Mar &ndash; Aug 2024</span></div>
+      <ul>
+        <li>Engineered pipeline transforming data from research DBs into informative visuals for MD-PhD program evals</li>
+        <li>Conducted name disambiguation experiments with confusion matrices, <strong>increasing accuracy by &gt;5%</strong></li>
+        <li>Redesigned relational database schema for more natural SQL queries that accommodate a wide array of visuals</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="row"><span class="what">LEO Fencing Club Automations</span> <span class="where">Cambridge, MA</span></div>
+      <div class="row role"><span>Freelance Developer</span> <span class="when">Sep &ndash; Dec 2025</span></div>
+      <ul>
+        <li>Built club&rsquo;s current scheduling and billing system, which <strong>processes ~$10k transactions biweekly</strong></li>
+        <li>Reverse-engineered Wix APIs for auto-charging, with added retry and rollback logic to ensure reliability</li>
+      </ul>
+    </div>
+
+    <h2>Projects</h2>
+    <div class="entry">
+      <div class="row"><span><span class="what">Dub-lite &ndash; ML Pipeline for Video Dubbing</span> | <a href="https://github.com/alisha-li/dub-lite">GitHub</a></span> <span class="where role">Aug 2025 &ndash; Present</span></div>
+      <ul>
+        <li>Built a dubbing pipeline that preserves background audio, speaker identities, and engineers audio alignment; used Redis to track jobs, served via FastAPI, DigitalOcean, and Modal (GPUs)</li>
+        <li>Added pluggable STT, translation, TTS, and diarization models, enabling cost-latency-accuracy tradeoffs</li>
+        <li>Reviewed ML papers to determine best models and prompts for each task (denoising, sentence splits, etc.)</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="row"><span><span class="what">American Time Use Survey Analysis &ndash; DS Capstone</span> | <a href="https://github.com/alisha-li/ATUS-Analysis">GitHub</a></span> <span class="where role">March &ndash; May 2026</span></div>
+      <ul>
+        <li>Modeled daily time-use across undergrads, graduate students, and employed new-grads using two-part hurdle models (logit and log-OLS) per activity bucket, w/ multinomial LRT confirming activity difference between groups</li>
+        <li>Found new-grads were less likely to work on a given day but worked longer when they did. And graduate students and new-grads engaged in more domestic care but less community care than undergrads</li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="row"><span><span class="what">Predictive Modeling of Fencing Performance</span> | <a href="https://github.com/alisha-li/Statistics-Projects/blob/main/Fencing%20Analyis%20Paper.pdf">Paper</a></span> <span class="where role">Apr &ndash; May 2025</span></div>
+      <ul>
+        <li>Collected and cleaned 3 years of competitive fencing data for supervised learning over a net-points objective</li>
+        <li>Applied cross-validation to select between linear regression and random forest models</li>
+        <li><strong>Showed some &ldquo;costly&rdquo; actions actually had significant positive impact, contrary to coach hypothesis</strong></li>
+      </ul>
+    </div>
+    <div class="entry">
+      <div class="row"><span><span class="what">Charter and Public School Comparison</span> | <a href="https://github.com/alisha-li/Statistics-Projects/blob/main/Charter%20Schools%20Paper.pdf">Paper</a></span> <span class="where role">Nov &ndash; Dec 2025</span></div>
+      <ul>
+        <li>Analyzed 1178 NY schools to find that charter status alone did not increase graduation rates, but significantly changed how other factors like suspensions, second-language share, and foster-care status related to it</li>
+      </ul>
+    </div>
+
+    <h2>Technical Skills</h2>
+    <div class="entry skills">
+      <p><strong>Languages:</strong> Python (JAX, NumPy, NumPyro, Pandas, Matplotlib), R, SQL, Java, C, JS, TS, MonkeyC</p>
+      <p><strong>Tools &amp; Frameworks:</strong> Git/GitHub, Hugging Face, AWS Suite, Jupyter/Colab, React, FastAPI, Modal, Wix</p>
+    </div>
+  </body>
+</html>

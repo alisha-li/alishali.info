@@ -4,12 +4,14 @@ A static site. No server, no build step, no framework. Vercel serves `public/`
 straight off the CDN.
 
 ```
-public/           everything that gets deployed
-  index.html      home
-  anki/index.html Anki heatmap (generated, do not hand-edit)
-  anki_data.json  review history (generated)
-  plots/          chart pages
-  css/main.css    the whole stylesheet
+public/                  everything that gets deployed
+  index.html             home
+  anki/index.html        Anki heatmap (generated, do not hand-edit)
+  anki_data.json         review history (generated)
+  resume/index.html      resume (hand-written)
+  alisha-li-resume.pdf   the PDF the resume page links to
+  plots/                 chart pages
+  css/main.css           the whole stylesheet
 scripts/          local tooling, never deployed
 sources/          raw Plotly/htmlwidget exports (local only, gitignored)
 old/              the retired Flask app, kept for reference (gitignored)
@@ -49,6 +51,23 @@ tail -f logs/update.log                         # what it did and why
 Every run writes a line to `logs/update.log`, including the boring ones
 ("skip: Anki unreachable"). Silence in that file means the agent is not running,
 which is the failure the old cron + `auto_push.sh` setup had no way to show.
+
+## Updating the resume
+
+`/resume` is hand-written HTML, not generated from the PDF. When the PDF
+changes, do both halves:
+
+```bash
+cp "path/to/new.pdf" public/alisha-li-resume.pdf
+# then edit public/resume/index.html to match
+```
+
+The page is unlisted: nothing on the site links to it, same as the chart pages.
+Text extraction from the PDF, if you want a starting point for the edits:
+
+```bash
+gs -q -dNOPAUSE -dBATCH -sDEVICE=txtwrite -sOutputFile=- resume.pdf
+```
 
 ## Adding a chart page
 
