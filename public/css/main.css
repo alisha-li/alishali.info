@@ -10,11 +10,10 @@ html {
 }
 
 body {
-    /* Georgia rather than Times. Times sets a comma followed by a capital so
-       tightly that "Equations, Analysis" reads as a missing space; Georgia was
-       drawn for screens and keeps that gap open. Both are serif, and Georgia
-       ships on every Mac, Windows and iOS device, so nothing is downloaded. */
-    font-family: Georgia, "Times New Roman", serif;
+    /* Times, matching how the site has always rendered. The original rule said
+       `font-family: Ariel`, which is not a font name, so browsers fell back to
+       their default serif. Naming it explicitly keeps that look. */
+    font-family: Times, "Times New Roman", serif;
     font-size: 20px;
     text-align: left;
     line-height: 1.6;
